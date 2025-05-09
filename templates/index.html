@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PulseMate - Smart Health Analysis</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        /* Custom fonts */
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        h1, h2, h3, .font-display {
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        /* Custom animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes slideIn {
+            from { transform: translateX(-20px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .animate-fade-in {
+            animation: fadeIn 0.5s ease-out forwards;
+        }
+        
+        .animate-slide-in {
+            animation: slideIn 0.5s ease-out forwards;
+        }
+        
+        .animate-pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+            background-size: 400% 400%;
+            animation: gradient 15s ease infinite;
+        }
+        
+        .loading {
+            display: none;
+        }
+        .loading.active {
+            display: block;
+        }
+        
+        /* Smooth transitions */
+        .transition-all {
+            transition: all 0.3s ease-in-out;
+        }
+        
+        /* Custom hover effects */
+        .hover-scale {
+            transition: transform 0.2s ease-in-out;
+        }
+        .hover-scale:hover {
+            transform: scale(1.02);
+        }
+        
+        /* Custom focus styles */
+        .custom-focus:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5);
+        }
+        
+        /* Glass morphism effect */
+        .glass {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        /* Medical background pattern */
+        .medical-bg {
+            background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxwYXRoIGQ9Ik0zNiAzNGMwIDIuMjA5LTEuNzkxIDQtNCA0cy00LTEuNzkxLTQtNCAxLjc5MS00IDQtNCA0IDEuNzkxIDQgNHoiIGZpbGw9IiNlMmU4ZjAiLz48cGF0aCBkPSJNMzAgMjRjMC0yLjIwOSAxLjc5MS00IDQtNHM0IDEuNzkxIDQgNC0xLjc5MSA0LTQgNC00LTEuNzkxLTQtNHoiIGZpbGw9IiNlMmU4ZjAiLz48cGF0aCBkPSJNMjQgMzRjMC0yLjIwOSAxLjc5MS00IDQtNHM0IDEuNzkxIDQgNC0xLjc5MSA0LTQgNC00LTEuNzkxLTQtNHoiIGZpbGw9IiNlMmU4ZjAiLz48L2c+PC9zdmc+');
+            background-color: #f8fafc;
+        }
+        
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-blue-50 to-purple-50 min-h-screen">
+    <nav class="glass shadow-lg transition-all duration-300">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center py-4">
+                <div class="flex items-center space-x-3">
+                    <!-- PulseMate Logo -->
+                    <div class="w-10 h-10 relative">
+                        <svg class="w-full h-full" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Heart Shape -->
+                            <path d="M50 85C50 85 15 65 15 40C15 25 30 15 50 15C70 15 85 25 85 40C85 65 50 85 50 85Z" 
+                                  fill="url(#heartGradient)" 
+                                  stroke="url(#heartGradient)" 
+                                  stroke-width="2"/>
+                            <!-- Pulse Lines -->
+                            <path d="M35 45L40 55L45 45L50 65L55 45L60 55L65 45" 
+                                  stroke="white" 
+                                  stroke-width="3" 
+                                  stroke-linecap="round" 
+                                  stroke-linejoin="round"/>
+                            <!-- Circle -->
+                            <circle cx="50" cy="50" r="45" 
+                                    stroke="url(#heartGradient)" 
+                                    stroke-width="2" 
+                                    fill="none"/>
+                        </svg>
+                        <!-- Gradients -->
+                        <defs>
+                            <linearGradient id="heartGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" style="stop-color:#3B82F6"/>
+                                <stop offset="100%" style="stop-color:#8B5CF6"/>
+                            </linearGradient>
+                        </defs>
+                    </div>
+                    <h1 class="text-2xl font-display font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600 animate-fade-in">
+                        <span class="text-blue-600">Pulse</span><span class="text-purple-600">Mate</span>
+                    </h1>
+                </div>
+                <div class="flex items-center space-x-4 animate-slide-in">
+                    {% if current_user.is_authenticated %}
+                        <span class="text-gray-600 font-medium">Welcome, {{ current_user.username }}</span>
+                        <a href="{{ url_for('logout') }}" class="text-blue-600 hover:text-blue-700 transition-colors duration-200 font-medium">Logout</a>
+                    {% else %}
+                        <a href="{{ url_for('login') }}" class="text-blue-600 hover:text-blue-700 transition-colors duration-200 font-medium">Login</a>
+                        <a href="{{ url_for('register') }}" class="text-blue-600 hover:text-blue-700 transition-colors duration-200 font-medium">Register</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mx-auto px-4 py-8">
+        <div class="max-w-2xl mx-auto">
+            {% if not current_user.is_authenticated %}
+                <div class="glass rounded-lg p-6 mb-8 animate-fade-in border-l-4 border-yellow-500">
+                    <p class="font-display font-bold text-yellow-700 mb-2">Login Required</p>
+                    <p class="text-gray-700">Please <a href="{{ url_for('login') }}" class="text-blue-600 hover:text-blue-700 transition-colors duration-200 font-medium">login</a> or 
+                       <a href="{{ url_for('register') }}" class="text-blue-600 hover:text-blue-700 transition-colors duration-200 font-medium">register</a> 
+                       to use PulseMate's health analysis feature.</p>
+                </div>
+            {% endif %}
+            
+            <div class="medical-bg rounded-xl shadow-xl p-8 hover-scale transition-all duration-300 relative overflow-hidden">
+                <!-- Decorative medical icons -->
+                <div class="absolute top-4 right-4 opacity-10">
+                    <svg class="w-16 h-16 text-blue-500" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"/>
+                    </svg>
+                </div>
+                <div class="absolute bottom-4 left-4 opacity-10">
+                    <svg class="w-16 h-16 text-purple-500" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 14h-2v-4h2v4zm0-6h-2V7h2v4z"/>
+                    </svg>
+                </div>
+                
+                <div class="relative z-10">
+                    <div class="mb-6">
+                        <label for="symptoms" class="block text-gray-700 text-sm font-display font-semibold mb-2 animate-fade-in flex items-center">
+                            <svg class="w-5 h-5 mr-2 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+                            </svg>
+                            Describe your health concerns:
+                        </label>
+                        <textarea id="symptoms" 
+                                  class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 custom-focus bg-white/80 backdrop-blur-sm" 
+                                  rows="4" 
+                                  placeholder="Enter your symptoms or health concerns here..."
+                                  {% if not current_user.is_authenticated %}disabled{% endif %}></textarea>
+                    </div>
+                    
+                    <button onclick="analyzeSymptoms()" 
+                            class="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white font-display font-semibold py-3 px-6 rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all duration-200 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 shadow-lg flex items-center justify-center"
+                            {% if not current_user.is_authenticated %}disabled{% endif %}>
+                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                        </svg>
+                        {% if current_user.is_authenticated %}
+                            Analyze Health
+                        {% else %}
+                            Login to Analyze
+                        {% endif %}
+                    </button>
+                    
+                    <div class="loading mt-6 text-center">
+                        <div class="inline-block animate-spin rounded-full h-10 w-10 border-4 border-blue-500 border-t-transparent"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="results" class="mt-8 hidden opacity-0 transition-all duration-300">
+                <div class="glass rounded-xl shadow-xl p-8 hover-scale">
+                    <h2 class="text-2xl font-display font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">Health Analysis Results</h2>
+                    
+                    <div id="emergency-alert" class="hidden bg-red-100 border-l-4 border-red-500 text-red-700 p-6 mb-6 rounded-lg animate-pulse">
+                        <p class="font-display font-bold text-xl mb-2">⚠️ Emergency Alert!</p>
+                        <p class="text-lg">Based on your symptoms, you should seek immediate medical attention.</p>
+                    </div>
+                    
+                    <div class="mb-8 animate-fade-in">
+                        <h3 class="text-xl font-display font-semibold mb-4 text-gray-800">Possible Diagnoses:</h3>
+                        <ul id="diagnoses" class="space-y-3 text-gray-700"></ul>
+                    </div>
+                    
+                    <div class="mb-8 animate-fade-in">
+                        <h3 class="text-xl font-display font-semibold mb-4 text-gray-800">Recommendations:</h3>
+                        <ul id="recommendations" class="space-y-3 text-gray-700"></ul>
+                    </div>
+
+                    <div class="mt-8 p-6 bg-gray-50 rounded-lg animate-fade-in border border-gray-200">
+                        <h3 class="text-xl font-display font-semibold mb-4 text-gray-800">Medical Disclaimer:</h3>
+                        <p class="text-gray-600 leading-relaxed">{{ disclaimer }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        async function analyzeSymptoms() {
+            const symptoms = document.getElementById('symptoms').value.trim();
+            if (!symptoms) {
+                alert('Please enter your symptoms');
+                return;
+            }
+
+            // Show loading spinner
+            document.querySelector('.loading').classList.add('active');
+            document.getElementById('results').classList.add('hidden', 'opacity-0');
+            document.getElementById('emergency-alert').classList.add('hidden');
+
+            try {
+                const response = await fetch('/analyze', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ symptoms }),
+                });
+
+                if (response.status === 302) {
+                    window.location.href = '/login';
+                    return;
+                }
+
+                const data = await response.json();
+                
+                if (response.ok) {
+                    // Display results with animation
+                    const diagnosesList = document.getElementById('diagnoses');
+                    const recommendationsList = document.getElementById('recommendations');
+                    
+                    diagnosesList.innerHTML = data.diagnoses.map(d => `
+                        <li class="flex items-center space-x-3 animate-fade-in">
+                            <span class="text-blue-500">•</span>
+                            <span>${d}</span>
+                        </li>
+                    `).join('');
+                    
+                    recommendationsList.innerHTML = data.recommendations.map(r => `
+                        <li class="flex items-center space-x-3 animate-fade-in">
+                            <span class="text-purple-500">•</span>
+                            <span>${r}</span>
+                        </li>
+                    `).join('');
+                    
+                    if (data.emergency) {
+                        document.getElementById('emergency-alert').classList.remove('hidden');
+                    }
+                    
+                    const resultsDiv = document.getElementById('results');
+                    resultsDiv.classList.remove('hidden');
+                    // Trigger reflow
+                    void resultsDiv.offsetWidth;
+                    resultsDiv.classList.remove('opacity-0');
+                } else {
+                    alert(data.error || 'An error occurred');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('An error occurred while analyzing symptoms. Please make sure you are logged in.');
+            } finally {
+                document.querySelector('.loading').classList.remove('active');
+            }
+        }
+
+        // Add smooth scroll behavior
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html> 
