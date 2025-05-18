@@ -1,7 +1,5 @@
 # PulseMate - Smart Health Analysis Platform
 
-![PulseMate Logo](https://raw.githubusercontent.com/yourusername/pulsemate/main/static/logo.png)
-
 PulseMate is an intelligent health analysis platform that uses natural language processing to analyze symptoms and provide preliminary health insights. The platform combines modern web technologies with advanced NLP to deliver a user-friendly health assessment tool.
 
 ## 🌟 Features
@@ -79,23 +77,10 @@ The application will be available at `http://localhost:5002`
 
 PulseMate is designed to provide preliminary health insights and should not be used as a substitute for professional medical advice. Always consult with healthcare professionals for proper diagnosis and treatment.
 
-## 🤝 Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
-## 📝 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## 👥 Authors
 
-- Your Name - Initial work
+- Puneeth Sarji
 
 ## 🙏 Acknowledgments
 
@@ -103,10 +88,5 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - Flask team for the web framework
 - Tailwind CSS for the styling framework
 
-## 📞 Support
-
-For support, email support@pulsemate.com or open an issue in the repository.
-
----
 
 Made with ❤️ by the PulseMate Team 
